@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var model = GameModel.shared
+    @State var inputString:String = ""
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack{
+            TextField(text: $inputString, label: {
+                Text("请输入文本")
+            })
+            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Text("确定")
+            })
+            
         }
-        .padding()
+        .frame(minWidth: 300,minHeight: 300)
     }
 }
 
