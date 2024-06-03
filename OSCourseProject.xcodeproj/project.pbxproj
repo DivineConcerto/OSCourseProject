@@ -17,6 +17,7 @@
 		DC9D691B2C0D574600D0B541 /* LFUExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D691A2C0D574600D0B541 /* LFUExecutor.swift */; };
 		DC9D691D2C0D5A1D00D0B541 /* OPTExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D691C2C0D5A1D00D0B541 /* OPTExecutor.swift */; };
 		DC9D69222C0D5BCC00D0B541 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69212C0D5BCC00D0B541 /* ContentViewModel.swift */; };
+		DC9D69242C0D709300D0B541 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69232C0D709300D0B541 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		DC9D691A2C0D574600D0B541 /* LFUExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFUExecutor.swift; sourceTree = "<group>"; };
 		DC9D691C2C0D5A1D00D0B541 /* OPTExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPTExecutor.swift; sourceTree = "<group>"; };
 		DC9D69212C0D5BCC00D0B541 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		DC9D69232C0D709300D0B541 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */,
 				DC9D69032C0D499D00D0B541 /* ContentView.swift */,
+				DC9D69232C0D709300D0B541 /* SettingView.swift */,
 				DC9D69212C0D5BCC00D0B541 /* ContentViewModel.swift */,
 				DC9D691E2C0D5A3100D0B541 /* Model */,
 				DC9D69052C0D499E00D0B541 /* Assets.xcassets */,
@@ -168,6 +171,7 @@
 				DC9D69222C0D5BCC00D0B541 /* ContentViewModel.swift in Sources */,
 				DC9D69132C0D4D0400D0B541 /* FIFOExecutor.swift in Sources */,
 				DC9D69042C0D499D00D0B541 /* ContentView.swift in Sources */,
+				DC9D69242C0D709300D0B541 /* SettingView.swift in Sources */,
 				DC9D69022C0D499D00D0B541 /* OSCourseProjectApp.swift in Sources */,
 				DC9D69112C0D49C800D0B541 /* GameModel.swift in Sources */,
 				DC9D691B2C0D574600D0B541 /* LFUExecutor.swift in Sources */,

@@ -11,6 +11,10 @@ struct LRUExecutor{
     
     var pageFrames:[Int] = []
     var model = GameModel.shared
+    
+    var timeSpent:Double = 0
+    
+    var interruptionCount = 0
 
     
 
@@ -23,9 +27,12 @@ struct LRUExecutor{
                 let index = pageFrames.firstIndex(of: pageIndex)
                 pageFrames.remove(at: index!)
                 pageFrames.append(pageIndex)
+                timeSpent += model.storageTime
             }else{
                 // 如果不存在，就将它添加到末尾
+                interruptionCount += 1
                 pageFrames.append(pageIndex)
+                timeSpent = timeSpent + model.storageTime + model.interruptionTime
             }
             
         }else{
@@ -34,9 +41,12 @@ struct LRUExecutor{
                 let index = pageFrames.firstIndex(of: pageIndex)
                 pageFrames.remove(at: index!)
                 pageFrames.append(pageIndex)
+                timeSpent = timeSpent + model.storageTime
             }else{
+                interruptionCount += 1
                 pageFrames.append(pageIndex)
                 pageFrames.removeFirst()
+                timeSpent = timeSpent + model.storageTime + model.interruptionTime
             }
             
         }

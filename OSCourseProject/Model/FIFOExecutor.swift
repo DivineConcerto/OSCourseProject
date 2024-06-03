@@ -10,21 +10,33 @@ import Foundation
 struct FIFOExecutor{
     
     var model = GameModel.shared
-    var pageFrames:[Int]
+    var pageFrames:[Int] = []
     var point:Int = 0
     
-    init(){
-        pageFrames = Array(repeating: -1, count: model.pageFrameCount)
-    }
+    var interruptionCount = 0
+    var timeSpent:Double = 0
+
     
     mutating func step(pageIndex:Int){
+        
         // 如果里面存在，就跳过
         if pageFrames.firstIndex(of: pageIndex) != nil{
+            timeSpent += model.storageTime
             return
+        }else {
+            interruptionCount += 1
+            // 填充阶段
+            timeSpent = timeSpent + model.storageTime + model.interruptionTime
+            if pageFrames.count < model.pageFrameCount{
+                pageFrames.append(pageIndex)
+            }else{
+                // 如果不存在，再玩这一套
+                pageFrames[point] = pageIndex
+                point = (point + 1) % model.pageFrameCount
+            }
         }
-        // 如果不存在，再玩这一套
-        pageFrames[point] = pageIndex
-        point = (point + 1) % model.pageFrameCount
+       
+       
     }
      
     

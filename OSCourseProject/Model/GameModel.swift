@@ -17,11 +17,12 @@ class GameModel:ObservableObject{
     var pageCount:Int = 0 // 页面个数
     var pageFrameCount:Int = 5 // 页框数
     
-    var storageTime:Double = 0 // 内存存取时间
-    var interruptionTime:Double = 0 // 缺页中断时间
+    var storageTime:Double = 0.1 // 内存存取时间
+    var interruptionTime:Double = 0.5 // 缺页中断时间
     
     var useCache:Bool = false // 是否使用快表
-    var cacheLookupTime:Double = 0 // 快表时间
+    var cacheLookupTime:Double = 0.1 // 快表时间
+    var cacheCapacity:Int = 0 // 快表大小
     
     
 
