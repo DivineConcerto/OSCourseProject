@@ -7,22 +7,24 @@
 
 import Foundation
 
-class FIFOExecutor{
+struct FIFOExecutor{
     
     var model = GameModel.shared
-    
-    var pageSequence:[Int]
     var pageFrames:[Int]
     var point:Int = 0
     
     init(){
-        pageSequence = model.pageSequence
         pageFrames = Array(repeating: -1, count: model.pageFrameCount)
     }
     
-    func step(pageIndex:Int){
+    mutating func step(pageIndex:Int){
+        // 如果里面存在，就跳过
+        if pageFrames.firstIndex(of: pageIndex) != nil{
+            return
+        }
+        // 如果不存在，再玩这一套
         pageFrames[point] = pageIndex
-        point = point + 1 % model.pageCount
+        point = (point + 1) % model.pageFrameCount
     }
      
     

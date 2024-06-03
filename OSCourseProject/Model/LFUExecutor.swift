@@ -7,28 +7,26 @@
 
 import Foundation
 
-class LFUExecutor{
+struct LFUExecutor{
     
     var model = GameModel.shared
     
-    var pageSequence:[Int]
     var pageFrames:[Int] = []
-    var frequency:[Int]
+    var frequency:[Int] = []
     
     init(){
-        pageSequence = model.pageSequence
-        frequency = Array(repeating: 0, count: model.pageCount)
+        frequency = Array(repeating: 0, count: model.pageFrameCount)
     }
     
-    func step(pageIndex:Int){
+    mutating func step(pageIndex:Int){
         // 填充阶段，如果里面存在，相应位置就加一；如果里面不存在，就将其加到后面。
-        if pageFrames.count < model.pageCount{
-            if pageFrames.contains(pageIndex){
+        if pageFrames.count < model.pageFrameCount{
+            if pageFrames.firstIndex(of: pageIndex) != nil{
                 let index:Int! = pageFrames.firstIndex(of: pageIndex)
                 frequency[index] += 1
             }else{
                 pageFrames.append(pageIndex)
-                pageFrames[pageFrames.count - 1] += 1
+                frequency[pageFrames.count - 1] += 1
             }
         }else{
             // 稳定阶段，如果里面存在，相应位置加一，如果里面不存在，就删除最小频率，频率归零，将其加在最后面，频率加一。
@@ -36,12 +34,14 @@ class LFUExecutor{
                 let index:Int! = pageFrames.firstIndex(of: pageIndex)
                 frequency[index] += 1
             }else{
-                let minValue:Int! = pageFrames.min()
-                let index:Int! = pageFrames.firstIndex(of: minValue)
-                pageFrames.remove(at: index)
-                pageFrames.append(pageIndex)
-                frequency.remove(at: index)
-                frequency[pageFrames.count - 1] += 1
+                if let minValue = frequency.min(),let minIndex = frequency.firstIndex(of: minValue){
+                    print("最小索引:\(String(describing: minIndex))")
+                    pageFrames.remove(at: minIndex)
+                    pageFrames.append(pageIndex)
+                    frequency.remove(at: minIndex)
+                    frequency.append(1)
+
+                }
             }
         }
         

@@ -7,21 +7,17 @@
 
 import Foundation
 
-class LRUExecutor{
+struct LRUExecutor{
     
-    var model = GameModel.shared
-    
-    var pageSequence:[Int]
     var pageFrames:[Int] = []
+    var model = GameModel.shared
+
     
+
     
-    init(){
-        pageSequence = model.pageSequence
-    }
-    
-    func step(pageIndex:Int){
+    mutating func step(pageIndex:Int){
         // 填充阶段
-        if pageFrames.count < model.pageCount {
+        if pageFrames.count < model.pageFrameCount {
             // 如果存在该元素，就将其移动到末尾
             if pageFrames.firstIndex(of: pageIndex) != nil{
                 let index = pageFrames.firstIndex(of: pageIndex)

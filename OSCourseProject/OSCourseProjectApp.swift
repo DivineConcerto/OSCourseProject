@@ -12,6 +12,9 @@ struct OSCourseProjectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .navigationTitle("操作系统课设")
         }
+        
+
     }
 }
