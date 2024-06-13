@@ -80,7 +80,7 @@ struct ContentView: View {
                     })
                 }
                 Button(action: {
-                    viewModel.step()
+                    print("在步进了")
                 }, label: {
                     Text("步进")
                         .font(.custom(settingModel.fontName, size: 20))

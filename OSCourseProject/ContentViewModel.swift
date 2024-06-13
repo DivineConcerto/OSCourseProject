@@ -10,9 +10,6 @@ import Foundation
 class ContentViewModel:ObservableObject{
     
     var settingModel = SettingModel.shared
-    
-    
-    @Published var status:Status = .preparing
     @Published var isFinished:Bool = false
     // MARK: - 基础运行模块，包括基础算法执行类，保存的页面队列
     // 基础的页面队列
@@ -25,24 +22,15 @@ class ContentViewModel:ObservableObject{
     @Published var OPTexecutor:OPTExecutor?
     
     
-    
-    // 基础算法输出类
-    @Published var pageSequenceString = ""
-    @Published var fifoResultString = ""
-    @Published var lruResultString = ""
-    @Published var lfuResultString = ""
-    @Published var optResultString = ""
-    
     // MARK: - 经典单步执行模块，已被弃用
-    var point = 0
+
     
     // 预备阶段，解析用户输入，初始化算法运算器
     func prepare(inputString:String){
         let stringArray = inputString.split(separator: ",")
         pageSequence = stringArray.compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
-        pageSequenceString = "\(pageSequence)"
-                       
-        
+
+      
         FIFOexecutor = FIFOExecutor()
         LRUexecutor = LRUExecutor()
         LFUexecutor = LFUExecutor()
@@ -52,58 +40,11 @@ class ContentViewModel:ObservableObject{
         lruPoint = 0
         lfuPoint = 0
         optPoint = 0
-        
-        fifoResultString = ""
-        lruResultString = ""
-        lfuResultString = ""
-        optResultString = ""
-        
-        point = 0
-        status = .preparing
         isFinished = false
-        
-    }
-    // 单步步进，四个算法运算器分别进行一步步进
-    func step(){
-
-        if point < pageSequence.count {
-            FIFOexecutor?.step(pageIndex: pageSequence[point])
-            LRUexecutor?.step(pageIndex: pageSequence[point])
-            LFUexecutor?.step(pageIndex: pageSequence[point])
-            OPTexecutor?.step(pageIndex: pageSequence[point], currentPoint: point)
-            point += 1
-            if point == pageSequence.count{
-                // TODO: 在这里保存数据
-                status = .end
-            }
-        }
-        if let fifoResult = FIFOexecutor?.pageFrames {
-            fifoResultString = "\(fifoResult)"
-        } else {
-            fifoResultString = "无"
-        }
-        
-        if let lruResult = LRUexecutor?.pageFrames {
-            lruResultString = "\(lruResult)"
-        } else {
-            lruResultString = "无"
-        }
-        
-        if let lfuResult = LFUexecutor?.pageFrames{
-            lfuResultString = "\(lfuResult)"
-        }else{
-            lruResultString = "无"
-        }
-        
-        if let optResult = OPTexecutor?.pageFrames{
-            optResultString = "\(optResult)"
-        }else{
-            optResultString = "无"
-        }
-        
+  
     }
     
-    // MARK: - 工具函数扩展，包括生成随机数
+    // MARK: - 工具函数扩展，包括生成随机数,返回格式化日期值
     // 生成并返回随机数
     func generatePageSequenceRandomly(count:Int,minValue:Int,maxValue:Int) -> String{
         
@@ -122,7 +63,7 @@ class ContentViewModel:ObservableObject{
         return dateFormatter.string(from: date)
     }
 
-    
+
     // MARK: - 多线程控制板块，当前使用方案
     let dispatchGroup = DispatchGroup()
         @Published var fifoPoint = 0

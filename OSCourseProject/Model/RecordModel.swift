@@ -14,39 +14,4 @@ struct Record:Hashable,Decodable,Encodable{
     
 }
 
-struct History:Hashable,Encodable,Decodable{
-    
-    // MARK: - 整体配置区
-    let date:Date
-    let pageFrameCount:Int
-    let storageTime:Double
-    let interruptionTime:Double
-    let useCache:Bool
-    let cacheLookupTime:Double
-    let cacheCapacity:Int
-    
-    // MARK: - FIFO区
-    let fifoResult:[Int]
-    let fifoRecordList:[Record]
-    let fifoTimeDuration:Double
-    let fifoInterruptionCount:Int
-    
-    // MARK: - LRU区
-    let lruResult:[Int]
-    let lruRecordList:[Record]
-    let lruTimeDuration:Double
-    let lruInterruptionCount:Int
-    
-    // MARK: - LFU区
-    let lfuResult:[Int]
-    let lfuRecordList:[Record]
-    let lfuTimeDuration:Double
-    let lfuInterruptionCount:Int
-    
-    // MARK: - OPT区
-    let optResult:[Int]
-    let optRecordList:[Record]
-    let optTimeDuration:Double
-    let optInterruptionCount:Int
-     
-}
+

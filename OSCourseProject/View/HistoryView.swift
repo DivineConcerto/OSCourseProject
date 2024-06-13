@@ -9,19 +9,11 @@ import SwiftUI
 
 struct HistoryCard: View {
     
-    let recordList = [
-    Record(inputPage: 2, content: [2,3,4,1,6]),
-    Record(inputPage: 1, content: [2,3,4,1,5]),
-    Record(inputPage: 3, content: [2,4,3,1,2])
-    ]
+
     
     let history:History
     
-//    init(){
-//        history = History(date: .now, pageFrameCount: 3, storageTime: 0.1, interruptionTime: 0.5, useCache: false, cacheLookupTime: 0.01, cacheCapacity: 3, fifoResult: [1,2,3,4], fifoRecordList: recordList, fifoTimeDuration: 5, fifoInterruptionCount: 5, lruResult: [1,2,3,4], lruRecordList: recordList, lruTimeDuration: 5, lruInterruptionCount: 5, lfuResult: [1,2,3,4], lfuRecordList: recordList, lfuTimeDuration: 5, lfuInterruptionCount: 5, optResult: [1,2,3,4], optRecordList: recordList, optTimeDuration: 5, optInterruptionCount: 5)
-//    }
-    
-    let dateFormatter = DateFormatter()
+
     var body: some View {
         VStack{
             Text("测试时间:\(ContentViewModel.shared.getFormattedDate(date: history.date))")
@@ -48,7 +40,7 @@ struct HistoryCard: View {
                 optResult
 
             }
-                        
+           
         }
     
     var optResult:some View{
@@ -159,17 +151,10 @@ struct HistoryCard: View {
 
 struct HistoryBar:View {
     
-    let recordList = [
-    Record(inputPage: 2, content: [2,3,4,1,6]),
-    Record(inputPage: 1, content: [2,3,4,1,5]),
-    Record(inputPage: 3, content: [2,4,3,1,2])
-    ]
-    
+
     var history:History
     
-//    init(){
-//        history = History(date: .now, pageFrameCount: 3, storageTime: 0.1, interruptionTime: 0.5, useCache: false, cacheLookupTime: 0.01, cacheCapacity: 3, fifoResult: [1,2,3,4], fifoRecordList: recordList, fifoTimeDuration: 5, fifoInterruptionCount: 5, lruResult: [1,2,3,4], lruRecordList: recordList, lruTimeDuration: 5, lruInterruptionCount: 5, lfuResult: [1,2,3,4], lfuRecordList: recordList, lfuTimeDuration: 5, lfuInterruptionCount: 5, optResult: [1,2,3,4], optRecordList: recordList, optTimeDuration: 5, optInterruptionCount: 5)
-//    }
+
     
     var body: some View {
         VStack{
@@ -206,7 +191,7 @@ struct HistoryView:View {
     
     @ObservedObject var viewModel = ContentViewModel.shared
 
-    
+
     var body: some View {
         NavigationView{
             List{

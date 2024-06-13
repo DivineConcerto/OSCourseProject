@@ -24,19 +24,7 @@ class SettingModel:ObservableObject{
     var fontName =  "WeibeiSC-Bold" //"STSongti-SC-Regular"
 
 
-    var resultList:[Result] = []
-    
-    // MARK: - 保存设置与加载设置
-    func saveSetting(){
-        
-    }
-    
-    func loadSetting(){
-        
-    }
-
-    
-    
+  
     static let shared = SettingModel()
     private init(){
         
