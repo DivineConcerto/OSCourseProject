@@ -14,9 +14,10 @@ struct SettingView: View {
     @State var inputInterruptionTime:String = ""
     @State var inputCacheLookupTime:String = ""
     @State var inputUseCahce = false
+    @State var inputCacheCapacity:String = ""
     
-    @ObservedObject var model = GameModel.shared
-    @Environment(\.presentationMode) var presentationMode
+    var model = SettingModel.shared
+
 
     var body: some View {
         VStack{
@@ -24,6 +25,8 @@ struct SettingView: View {
                 VStack{
                     HStack{
                         Text("驻内存页面数:")
+ 
+
                         TextField(text: $inputFrameCount, label: {
                             Text("在这里输入")
                         })
@@ -42,12 +45,20 @@ struct SettingView: View {
                     }
                
                 }
-                VStack(alignment: .center){
+                VStack(alignment: .leading){
                     HStack{
                         Toggle(isOn: $inputUseCahce, label: {
                             Text("是否使用快表")
                         })
                     }
+                    
+                    HStack{
+                        Text("快表容量大小:")
+                        TextField(text: $inputCacheCapacity, label: {
+                            Text("在这里输入")
+                        })
+                    }
+
                     
                     HStack{
                         Text("快表查询时间:")
@@ -57,20 +68,22 @@ struct SettingView: View {
                     }
                     
                 }
+                
             }
+            .font(.custom(model.fontName, size: 14))
             
-            Button("保存并返回"){
+            Button("保存设置"){
                 model.pageFrameCount = Int(inputFrameCount) ?? 3
                 model.storageTime = Double(inputStorageTime) ?? 0.1
                 model.interruptionTime = Double(inputInterruptionTime) ?? 0.1
                 model.cacheLookupTime = Double(inputCacheLookupTime) ?? 0.1
-                presentationMode.wrappedValue.dismiss()
+            
             }
+            .font(.custom(model.fontName, size: 15))
         }
         .onAppear{
-            loadData()
+             loadData()
         }
-        .frame(width: 400,height: 100)
         .padding()
     }
     
@@ -81,6 +94,7 @@ struct SettingView: View {
         inputStorageTime = String(format: "%.1f", model.storageTime)
         inputInterruptionTime = String(format: "%.1f", model.interruptionTime)
         inputCacheLookupTime = String(format: "%.1f", model.cacheLookupTime)
+        inputCacheCapacity = String(Int(model.cacheCapacity))
     }
 }
 

@@ -9,12 +9,15 @@ import Foundation
 
 struct OPTExecutor{
     
-    var model = GameModel.shared
+    init(pageSequence:[Int]){
+        self.pageSequence = pageSequence
+    }
+    
+    var model = SettingModel.shared
     var pageFrames:[Int] = []
-    
     var timeSpent:Double = 0
-    
     var interruptionCount = 0
+    var pageSequence:[Int] = []
     
     mutating func step(pageIndex:Int,currentPoint:Int){
         
@@ -38,7 +41,7 @@ struct OPTExecutor{
             var farthestDistance = -1
             var farthestIndex = -1
             for (index, page) in pageFrames.enumerated() {
-                if let futureIndex = model.pageSequence[currentPoint...].firstIndex(of: page) {
+                if let futureIndex = pageSequence[currentPoint...].firstIndex(of: page) {
                     if futureIndex > farthestDistance {
                         farthestDistance = futureIndex
                         farthestIndex = index
@@ -53,9 +56,6 @@ struct OPTExecutor{
             pageFrames.append(pageIndex)
             timeSpent += model.storageTime + model.interruptionTime
             interruptionCount += 1
-
-            
         }
-    }
-    
+    }    
 }

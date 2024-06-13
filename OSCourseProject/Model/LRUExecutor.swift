@@ -10,14 +10,9 @@ import Foundation
 struct LRUExecutor{
     
     var pageFrames:[Int] = []
-    var model = GameModel.shared
-    
+    var model = SettingModel.shared
     var timeSpent:Double = 0
-    
     var interruptionCount = 0
-
-    
-
     
     mutating func step(pageIndex:Int){
         // 填充阶段
@@ -34,7 +29,6 @@ struct LRUExecutor{
                 pageFrames.append(pageIndex)
                 timeSpent = timeSpent + model.storageTime + model.interruptionTime
             }
-            
         }else{
             // 稳定阶段，如果里面有，就将其移动到末尾。如果没有，就加到末尾，然后删除第一个元素
             if pageFrames.firstIndex(of: pageIndex) != nil{
@@ -48,7 +42,6 @@ struct LRUExecutor{
                 pageFrames.removeFirst()
                 timeSpent = timeSpent + model.storageTime + model.interruptionTime
             }
-            
         }
     }
 }

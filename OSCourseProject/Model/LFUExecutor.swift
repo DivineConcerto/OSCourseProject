@@ -9,11 +9,9 @@ import Foundation
 
 struct LFUExecutor{
     
-    var model = GameModel.shared
-    
+    var model = SettingModel.shared
     var pageFrames:[Int] = []
     var frequency:[Int] = []
-    
     var timeSpent:Double = 0
     var interruptionCount = 0
     
@@ -43,7 +41,6 @@ struct LFUExecutor{
             }else{
                 interruptionCount += 1
                 if let minValue = frequency.min(),let minIndex = frequency.firstIndex(of: minValue){
-                    print("最小索引:\(String(describing: minIndex))")
                     pageFrames.remove(at: minIndex)
                     pageFrames.append(pageIndex)
                     frequency.remove(at: minIndex)
@@ -52,9 +49,6 @@ struct LFUExecutor{
 
                 }
             }
-        }
-        
-        
-        
+        }      
     }
 }
