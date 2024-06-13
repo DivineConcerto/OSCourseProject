@@ -18,7 +18,7 @@ class SettingModel:ObservableObject{
     var useCache:Bool = false // 是否使用快表
     var cacheLookupTime:Double = 0.1 // 快表时间
     var cacheCapacity:Int = 3 // 快表大小
-    var intervals:Double = 0.5 // 间隔时间
+    var intervals:Double = 0.2 // 间隔时间
     
     // MARK: - 外观设置
     var fontName =  "WeibeiSC-Bold" //"STSongti-SC-Regular"

@@ -11,6 +11,7 @@ class ContentViewModel:ObservableObject{
     
     var settingModel = SettingModel.shared
     
+    
     @Published var status:Status = .preparing
     // MARK: - 基础运行模块，包括基础算法执行类，保存的页面队列
     // 基础的页面队列
@@ -113,6 +114,11 @@ class ContentViewModel:ObservableObject{
         return result
     }
     
+    func getFormattedDate(date:Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
 
     
     // MARK: - 多线程控制板块，当前使用方案
@@ -148,7 +154,11 @@ class ContentViewModel:ObservableObject{
                 self.runOPT()
             }
 
-            dispatchGroup.notify(queue: DispatchQueue.main) {
+            dispatchGroup.notify(queue: DispatchQueue.main) { [self] in
+                // 当所有任务完成的时候，保存一次数据
+                let history = History(date: .now, pageFrameCount: settingModel.pageFrameCount, storageTime: settingModel.storageTime, interruptionTime: settingModel.interruptionTime, useCache: settingModel.useCache, cacheLookupTime: settingModel.cacheLookupTime, cacheCapacity: settingModel.cacheCapacity, fifoResult: self.FIFOexecutor!.pageFrames, fifoRecordList: FIFOexecutor!.recordList, fifoTimeDuration: self.FIFOexecutor!.timeSpent, fifoInterruptionCount: self.FIFOexecutor!.interruptionCount, lruResult: self.LRUexecutor!.pageFrames, lruRecordList: self.LRUexecutor!.recordList, lruTimeDuration: self.LRUexecutor!.timeSpent, lruInterruptionCount: self.LRUexecutor!.interruptionCount, lfuResult: self.LFUexecutor!.pageFrames, lfuRecordList: self.LFUexecutor!.recordList, lfuTimeDuration: self.LFUexecutor!.timeSpent, lfuInterruptionCount: self.LFUexecutor!.interruptionCount, optResult: self.OPTexecutor!.pageFrames, optRecordList: self.OPTexecutor!.recordList, optTimeDuration: self.OPTexecutor!.timeSpent, optInterruptionCount: self.OPTexecutor!.interruptionCount)
+                historyList.append(history)
+                saveData()
                 print("All functions completed")
             }
         }
@@ -235,14 +245,42 @@ class ContentViewModel:ObservableObject{
     func getPageSequenceValue(at index: Int) -> Int? {
         return index < pageSequence.count ? pageSequence[index] : pageSequence.last
     }
-
-
+    
+    // MARK: - 历史数据加载和保存模块
+    @Published var historyList:[History] = []
+    
+    func getDocumentsDirectory() -> URL{
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func loadData(){
+        let url = getDocumentsDirectory().appendingPathComponent("HistoryList.json")
+        if let data = try? Data(contentsOf: url){
+            let decoder = JSONDecoder()
+            if let modelStorage = try? decoder.decode([History].self, from: data){
+                historyList = modelStorage
+                return
+            }
+        }
+        historyList = []
+    }
+    
+    func saveData(){
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(historyList){
+            let url = getDocumentsDirectory().appendingPathComponent("HistoryList.json")
+            try? encoded.write(to: url)
+        }else{
+            print("保存失败")
+        }
+    }
     
     // MARK: - 其他模块
     
     static let shared = ContentViewModel()
     private init(){
-        
+        loadData()
     }
 }
 

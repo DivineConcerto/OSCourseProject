@@ -12,6 +12,7 @@
 		DC71157B2C1004540092F63E /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71157A2C1004540092F63E /* MatrixView.swift */; };
 		DC88E2512C1931C40010A956 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2502C1931C40010A956 /* ResultView.swift */; };
 		DC88E2552C1951360010A956 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2542C1951360010A956 /* RecordModel.swift */; };
+		DC88E2572C1A8F590010A956 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2562C1A8F590010A956 /* HistoryView.swift */; };
 		DC9D69022C0D499D00D0B541 /* OSCourseProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */; };
 		DC9D69042C0D499D00D0B541 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69032C0D499D00D0B541 /* ContentView.swift */; };
 		DC9D69062C0D499E00D0B541 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC9D69052C0D499E00D0B541 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		DC71157A2C1004540092F63E /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 		DC88E2502C1931C40010A956 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		DC88E2542C1951360010A956 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
+		DC88E2562C1A8F590010A956 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		DC9D68FE2C0D499D00D0B541 /* OSCourseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCourseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCourseProjectApp.swift; sourceTree = "<group>"; };
 		DC9D69032C0D499D00D0B541 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				DC7115782C0FEA290092F63E /* RecordView.swift */,
 				DC88E2502C1931C40010A956 /* ResultView.swift */,
 				DC9D69212C0D5BCC00D0B541 /* ContentViewModel.swift */,
+				DC88E2562C1A8F590010A956 /* HistoryView.swift */,
 				DC7115762C0FE6E70092F63E /* Utility.swift */,
 				DC9D691E2C0D5A3100D0B541 /* Model */,
 				DC9D69052C0D499E00D0B541 /* Assets.xcassets */,
@@ -190,6 +193,7 @@
 				DC9D69042C0D499D00D0B541 /* ContentView.swift in Sources */,
 				DC9D69242C0D709300D0B541 /* SettingView.swift in Sources */,
 				DC9D69022C0D499D00D0B541 /* OSCourseProjectApp.swift in Sources */,
+				DC88E2572C1A8F590010A956 /* HistoryView.swift in Sources */,
 				DC88E2552C1951360010A956 /* RecordModel.swift in Sources */,
 				DC88E2512C1931C40010A956 /* ResultView.swift in Sources */,
 				DC9D69112C0D49C800D0B541 /* SettingModel.swift in Sources */,

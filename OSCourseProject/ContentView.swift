@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var showResultView = false
     
     @State var inputString:String = ""
+    @State var selectedTab = 0
     
     // 随机生成
     @State var randomPageCount:String = ""
@@ -23,23 +24,32 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            TabView{
+            TabView(selection:$selectedTab){
                 prepareView
                 .tabItem {
                     Text("做点准备🤗")
                 }
+                .tag(0)
                 executeView
                     .tabItem {
                         Text("开始测试😇")
                     }
+                    .tag(1)
                 RecordView()
                     .tabItem {
                         Text("看看结果🤩")
                     }
+                    .tag(2)
                 SettingView()
                     .tabItem {
                         Text("设置一下😅")
-                    }            
+                    }       
+                    .tag(3)
+                HistoryView()
+                    .tabItem {
+                        Text("查查历史🤯")
+                    }
+                    .tag(4)
             }
         }
         .padding()
@@ -147,28 +157,16 @@ struct ContentView: View {
             VStack{
                 Text("用户输入")
                     .font(.custom(settingModel.fontName, size: 20))
-                    .padding(.bottom,35)
                 TextField(text: $inputString, label: {
                     Text("")
                 })
+                .padding()
                 HStack{
                     Button(action: {
                         viewModel.prepare(inputString: inputString)
+                        selectedTab = 1
                     }, label: {
-                        Text("确定")
-                            .font(.custom(settingModel.fontName, size: 20))
-                    })
-                    Button(action: {
-                        showSettingView = true
-                    }, label: {
-                        Text("设置")
-                            .font(.custom(settingModel.fontName, size: 20))
-                        
-                    })
-                    Button(action: {
-                        showResultView = true
-                    }, label: {
-                        Text("记录")
+                        Text("开始测试")
                             .font(.custom(settingModel.fontName, size: 20))
                     })
                 }
