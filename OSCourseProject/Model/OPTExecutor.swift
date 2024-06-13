@@ -17,6 +17,8 @@ struct OPTExecutor {
     
     var cache: [Int] = []
     var cacheSize: Int
+
+    var recordList:[Record] = []
     
     init(pageSequence: [Int]) {
         self.pageSequence = pageSequence
@@ -30,6 +32,7 @@ struct OPTExecutor {
             if let cacheIndex = cache.firstIndex(of: pageIndex) {
                 // 快表命中
                 timeSpent += model.cacheLookupTime
+                recordList.append(Record(inputPage: pageIndex, content: pageFrames))
                 return
             } else {
                 // 快表缺失
@@ -49,12 +52,14 @@ struct OPTExecutor {
             pageFrames.append(pageIndex)
             timeSpent += model.storageTime + model.interruptionTime
             interruptionCount += 1
+            recordList.append(Record(inputPage: pageIndex, content: pageFrames))
             return
         }
         
         // 稳定阶段，如果页面存在于主存
         if pageFrames.firstIndex(of: pageIndex) != nil {
             timeSpent += model.storageTime
+            recordList.append(Record(inputPage: pageIndex, content: pageFrames))
             return
         }
         
@@ -77,6 +82,9 @@ struct OPTExecutor {
         pageFrames.append(pageIndex)
         timeSpent += model.storageTime + model.interruptionTime
         interruptionCount += 1
+        recordList.append(Record(inputPage: pageIndex, content: pageFrames))
+        
+        
     }
     
     private func futurePosition(of page: Int, currentPoint: Int) -> Int {
@@ -86,4 +94,6 @@ struct OPTExecutor {
             return Int.max
         }
     }
+    
+    
 }

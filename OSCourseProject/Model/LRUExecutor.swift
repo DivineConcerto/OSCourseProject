@@ -15,6 +15,8 @@ struct LRUExecutor {
     var interruptionCount = 0
     var timeSpent: Double = 0
     
+    var recordList:[Record] = []
+    
     init(){
         cacheSize = model.cacheCapacity
     }
@@ -28,6 +30,7 @@ struct LRUExecutor {
                 // 更新快表顺序
                 cache.remove(at: cacheIndex)
                 cache.append(pageIndex)
+                recordList.append(Record(inputPage: pageIndex, content: pageFrames))
                 return
             } else {
                 // 快表缺失
@@ -57,5 +60,7 @@ struct LRUExecutor {
                 pageFrames.append(pageIndex)
             }
         }
+        
+        recordList.append(Record(inputPage: pageIndex, content: pageFrames))
     }
 }

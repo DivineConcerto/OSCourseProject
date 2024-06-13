@@ -7,12 +7,9 @@
 
 import Foundation
 
-struct Record{
+struct Record:Hashable{
     
-    
-    // MARK: - 整体区
-    
-    // MARK: - FIFO区
-    var fifoResult:[Int]
+    var inputPage:Int
+    var content:[Int]
     
 }

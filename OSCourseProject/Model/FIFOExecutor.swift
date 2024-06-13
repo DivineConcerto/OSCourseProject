@@ -17,6 +17,8 @@ struct FIFOExecutor{
     var cache:[Int] = []
     var cacheSize:Int = 3
     
+    var recordList:[Record] = []
+    
     init(){
         cacheSize = model.cacheCapacity
     }
@@ -28,6 +30,7 @@ struct FIFOExecutor{
                     if let cacheIndex = cache.firstIndex(of: pageIndex) {
                         // 快表命中
                         timeSpent += model.cacheLookupTime
+                        recordList.append(Record(inputPage: pageIndex, content: pageFrames))
                         return
                     } else {
                         // 快表缺失
@@ -43,6 +46,7 @@ struct FIFOExecutor{
         // 如果里面存在，就跳过
         if pageFrames.firstIndex(of: pageIndex) != nil{
             timeSpent += model.storageTime
+            recordList.append(Record(inputPage: pageIndex, content: pageFrames))
             return
         }else {
             interruptionCount += 1
@@ -55,5 +59,8 @@ struct FIFOExecutor{
                 pageFrames.append(pageIndex)
             }
         }
+        
+        recordList.append(Record(inputPage: pageIndex, content: pageFrames))
     }
+    
 }

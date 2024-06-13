@@ -11,7 +11,6 @@
 		DC7115792C0FEA290092F63E /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7115782C0FEA290092F63E /* RecordView.swift */; };
 		DC71157B2C1004540092F63E /* MatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71157A2C1004540092F63E /* MatrixView.swift */; };
 		DC88E2512C1931C40010A956 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2502C1931C40010A956 /* ResultView.swift */; };
-		DC88E2532C1943DE0010A956 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2522C1943DE0010A956 /* TestView.swift */; };
 		DC88E2552C1951360010A956 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88E2542C1951360010A956 /* RecordModel.swift */; };
 		DC9D69022C0D499D00D0B541 /* OSCourseProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */; };
 		DC9D69042C0D499D00D0B541 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D69032C0D499D00D0B541 /* ContentView.swift */; };
@@ -31,7 +30,6 @@
 		DC7115782C0FEA290092F63E /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		DC71157A2C1004540092F63E /* MatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixView.swift; sourceTree = "<group>"; };
 		DC88E2502C1931C40010A956 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
-		DC88E2522C1943DE0010A956 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		DC88E2542C1951360010A956 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		DC9D68FE2C0D499D00D0B541 /* OSCourseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCourseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCourseProjectApp.swift; sourceTree = "<group>"; };
@@ -80,7 +78,6 @@
 			children = (
 				DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */,
 				DC9D69032C0D499D00D0B541 /* ContentView.swift */,
-				DC88E2522C1943DE0010A956 /* TestView.swift */,
 				DC71157A2C1004540092F63E /* MatrixView.swift */,
 				DC9D69232C0D709300D0B541 /* SettingView.swift */,
 				DC7115782C0FEA290092F63E /* RecordView.swift */,
@@ -186,7 +183,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC88E2532C1943DE0010A956 /* TestView.swift in Sources */,
 				DC7115772C0FE6E70092F63E /* Utility.swift in Sources */,
 				DC9D69222C0D5BCC00D0B541 /* ContentViewModel.swift in Sources */,
 				DC7115792C0FEA290092F63E /* RecordView.swift in Sources */,

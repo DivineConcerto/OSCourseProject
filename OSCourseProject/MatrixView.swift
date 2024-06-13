@@ -12,13 +12,14 @@ struct MatrixView: View {
     var array = [1,2,3,4,5,6,7]
     
     var body: some View {
-        HStack{
-            ForEach(array,id: \.self){ element in
-                BlockView(number: element)
+        ScrollView(.horizontal){
+            HStack{
+                ForEach(array,id: \.self){ element in
+                    BlockView(number: element)
+                }
+                .animation(.easeInOut)
             }
-            .animation(.easeInOut)
         }
-
     }
 }
 

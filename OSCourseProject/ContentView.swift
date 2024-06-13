@@ -32,14 +32,14 @@ struct ContentView: View {
                     .tabItem {
                         Text("开始测试😇")
                     }
+                RecordView()
+                    .tabItem {
+                        Text("看看结果🤩")
+                    }
                 SettingView()
                     .tabItem {
                         Text("设置一下😅")
-                    }
-                RecordView()
-                    .tabItem {
-                        Text("看看记录🤩")
-                    }
+                    }            
             }
         }
         .padding()
@@ -71,9 +71,7 @@ struct ContentView: View {
             HStack{
                 Text("输入序列：")
                     .font(.custom(settingModel.fontName, size: 15))
-                TextField(text: $viewModel.pageSequenceString, label: {
-                    Text("")
-                })
+                MatrixView(array: viewModel.pageSequence)
             }
             LazyVGrid(columns: [GridItem(),GridItem()],spacing: 10, content: {
                 

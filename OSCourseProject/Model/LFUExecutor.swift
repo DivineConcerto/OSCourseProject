@@ -17,6 +17,8 @@ struct LFUExecutor {
     var interruptionCount = 0
     var timeSpent: Double = 0
     
+    var recordList:[Record] = []
+    
     init(){
         cacheSize = model.cacheCapacity
     }
@@ -29,6 +31,7 @@ struct LFUExecutor {
                 // 快表命中
                 timeSpent += model.cacheLookupTime
                 pageFrequency[pageIndex]! += 1
+                recordList.append(Record(inputPage: pageIndex, content: pageFrames))
                 return
             } else {
                 // 快表缺失
@@ -60,5 +63,6 @@ struct LFUExecutor {
             }
             pageFrequency[pageIndex] = 1
         }
+        recordList.append(Record(inputPage: pageIndex, content: pageFrames))
     }
 }

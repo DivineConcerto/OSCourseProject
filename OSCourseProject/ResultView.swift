@@ -36,4 +36,42 @@ struct ResultView: View {
     }
 }
 
+struct ShowView:View {
+    
+    var recordList:[Record] =
+    [
+        Record(inputPage: 2, content: [2,3,4,1,6]),
+        Record(inputPage: 1, content: [2,3,4,1,5]),
+        Record(inputPage: 3, content: [2,4,3,1,2])
+    ]
+    
+    
+    var body: some View {
+        VStack{
+            List{
+                ForEach(recordList.indices, id: \.self) { index in
+                    let element = recordList[index]
+                    VStack(alignment:.leading){
+                        HStack{
+                            Text("第\(index + 1)步")
+                            
+                            Text("访问")
+                            BlockView(number: element.inputPage)
+                        }
+                        HStack{
+                                MatrixView(array: element.content)
 
+                        }
+                    }
+                    .font(.custom(SettingModel.shared.fontName, size: 12))
+                    .padding()
+                }
+            }
+        }
+    }
+}
+
+
+#Preview{
+    ShowView()
+}
