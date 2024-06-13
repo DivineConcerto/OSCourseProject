@@ -4,43 +4,57 @@
 //
 //  Created by 张炫阳 on 2024/6/3.
 //
-
 import Foundation
 
-struct LRUExecutor{
+struct LRUExecutor {
     
-    var pageFrames:[Int] = []
     var model = SettingModel.shared
-    var timeSpent:Double = 0
+    var pageFrames: [Int] = []
+    var cache: [Int] = []
+    var cacheSize: Int = 2 // 设置快表大小
     var interruptionCount = 0
+    var timeSpent: Double = 0
     
-    mutating func step(pageIndex:Int){
-        // 填充阶段
-        if pageFrames.count < model.pageFrameCount {
-            // 如果存在该元素，就将其移动到末尾
-            if pageFrames.firstIndex(of: pageIndex) != nil{
-                let index = pageFrames.firstIndex(of: pageIndex)
-                pageFrames.remove(at: index!)
-                pageFrames.append(pageIndex)
-                timeSpent += model.storageTime
-            }else{
-                // 如果不存在，就将它添加到末尾
-                interruptionCount += 1
-                pageFrames.append(pageIndex)
-                timeSpent = timeSpent + model.storageTime + model.interruptionTime
+    init(){
+        cacheSize = model.cacheCapacity
+    }
+    
+    mutating func step(pageIndex: Int) {
+        if model.useCache{
+            // 快表访问
+            if let cacheIndex = cache.firstIndex(of: pageIndex) {
+                // 快表命中
+                timeSpent += model.cacheLookupTime
+                // 更新快表顺序
+                cache.remove(at: cacheIndex)
+                cache.append(pageIndex)
+                return
+            } else {
+                // 快表缺失
+                if cache.count < cacheSize {
+                    cache.append(pageIndex)
+                } else {
+                    cache.removeFirst()
+                    cache.append(pageIndex)
+                }
             }
-        }else{
-            // 稳定阶段，如果里面有，就将其移动到末尾。如果没有，就加到末尾，然后删除第一个元素
-            if pageFrames.firstIndex(of: pageIndex) != nil{
-                let index = pageFrames.firstIndex(of: pageIndex)
-                pageFrames.remove(at: index!)
+        }
+        
+        // 如果页面在主存中存在
+        if pageFrames.firstIndex(of: pageIndex) != nil {
+            timeSpent += model.storageTime
+            // 更新主存顺序
+            pageFrames.removeAll { $0 == pageIndex }
+            pageFrames.append(pageIndex)
+        } else {
+            // 缺页中断
+            interruptionCount += 1
+            timeSpent += model.storageTime + model.interruptionTime
+            if pageFrames.count < model.pageFrameCount {
                 pageFrames.append(pageIndex)
-                timeSpent = timeSpent + model.storageTime
-            }else{
-                interruptionCount += 1
-                pageFrames.append(pageIndex)
+            } else {
                 pageFrames.removeFirst()
-                timeSpent = timeSpent + model.storageTime + model.interruptionTime
+                pageFrames.append(pageIndex)
             }
         }
     }

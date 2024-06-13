@@ -26,8 +26,8 @@ struct ResultView: View {
             }
             MatrixView(array: pageSequence)
             HStack{
-                Text("花费时间:\(Int(timeDuration))秒")
-                Text("缺页次数:\(interruptionCount)次")
+                Text("花费时间: \(String(format: "%.2f", timeDuration))")
+                Text("缺页次数:\(interruptionCount)")
             }
         }
         .font(.custom(settingModel.fontName, size: 15))

@@ -7,48 +7,58 @@
 
 import Foundation
 
-struct LFUExecutor{
+struct LFUExecutor {
     
     var model = SettingModel.shared
-    var pageFrames:[Int] = []
-    var frequency:[Int] = []
-    var timeSpent:Double = 0
+    var pageFrames: [Int] = []
+    var cache: [Int] = []
+    var cacheSize: Int = 2 // 设置快表大小
+    var pageFrequency: [Int: Int] = [:] // 页面访问频率
     var interruptionCount = 0
+    var timeSpent: Double = 0
     
     init(){
-        frequency = Array(repeating: 0, count: model.pageFrameCount)
+        cacheSize = model.cacheCapacity
     }
     
-    mutating func step(pageIndex:Int){
-        // 填充阶段，如果里面存在，相应位置就加一；如果里面不存在，就将其加到后面。
-        if pageFrames.count < model.pageFrameCount{
-            if pageFrames.firstIndex(of: pageIndex) != nil{
-                let index:Int! = pageFrames.firstIndex(of: pageIndex)
-                frequency[index] += 1
-                timeSpent = timeSpent + model.storageTime
-            }else{
-                interruptionCount += 1
-                pageFrames.append(pageIndex)
-                frequency[pageFrames.count - 1] += 1
-                timeSpent = timeSpent + model.storageTime + model.interruptionTime
-            }
-        }else{
-            // 稳定阶段，如果里面存在，相应位置加一，如果里面不存在，就删除最小频率，频率归零，将其加在最后面，频率加一。
-            if pageFrames.contains(pageIndex){
-                let index:Int! = pageFrames.firstIndex(of: pageIndex)
-                frequency[index] += 1
-                timeSpent = timeSpent + model.storageTime
-            }else{
-                interruptionCount += 1
-                if let minValue = frequency.min(),let minIndex = frequency.firstIndex(of: minValue){
-                    pageFrames.remove(at: minIndex)
-                    pageFrames.append(pageIndex)
-                    frequency.remove(at: minIndex)
-                    frequency.append(1)
-                    timeSpent = timeSpent + model.storageTime + model.interruptionTime
-
+    mutating func step(pageIndex: Int) {
+        
+        if model.useCache{
+            // 快表访问
+            if let cacheIndex = cache.firstIndex(of: pageIndex) {
+                // 快表命中
+                timeSpent += model.cacheLookupTime
+                pageFrequency[pageIndex]! += 1
+                return
+            } else {
+                // 快表缺失
+                if cache.count < cacheSize {
+                    cache.append(pageIndex)
+                } else {
+                    let lfuPage = cache.min { pageFrequency[$0]! < pageFrequency[$1]! }!
+                    cache.removeAll { $0 == lfuPage }
+                    cache.append(pageIndex)
                 }
+                pageFrequency[pageIndex] = 1
             }
-        }      
+        }
+        
+        // 如果页面在主存中存在
+        if pageFrames.firstIndex(of: pageIndex) != nil {
+            timeSpent += model.storageTime
+            pageFrequency[pageIndex]! += 1
+        } else {
+            // 缺页中断
+            interruptionCount += 1
+            timeSpent += model.storageTime + model.interruptionTime
+            if pageFrames.count < model.pageFrameCount {
+                pageFrames.append(pageIndex)
+            } else {
+                let lfuPage = pageFrames.min { pageFrequency[$0]! < pageFrequency[$1]! }!
+                pageFrames.removeAll { $0 == lfuPage }
+                pageFrames.append(pageIndex)
+            }
+            pageFrequency[pageIndex] = 1
+        }
     }
 }

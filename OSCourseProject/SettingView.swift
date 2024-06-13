@@ -73,11 +73,12 @@ struct SettingView: View {
             .font(.custom(model.fontName, size: 14))
             
             Button("保存设置"){
-                model.pageFrameCount = Int(inputFrameCount) ?? 3
+                model.pageFrameCount = Int(inputFrameCount) ?? 5
                 model.storageTime = Double(inputStorageTime) ?? 0.1
-                model.interruptionTime = Double(inputInterruptionTime) ?? 0.1
-                model.cacheLookupTime = Double(inputCacheLookupTime) ?? 0.1
-            
+                model.interruptionTime = Double(inputInterruptionTime) ?? 0.5
+                model.cacheLookupTime = Double(inputCacheLookupTime) ?? 0.01
+                model.useCache = inputUseCahce
+                model.cacheCapacity = Int(inputCacheCapacity) ?? 3
             }
             .font(.custom(model.fontName, size: 15))
         }
@@ -91,9 +92,9 @@ struct SettingView: View {
     func loadData(){
         inputUseCahce = model.useCache
         inputFrameCount = String(model.pageFrameCount)
-        inputStorageTime = String(format: "%.1f", model.storageTime)
-        inputInterruptionTime = String(format: "%.1f", model.interruptionTime)
-        inputCacheLookupTime = String(format: "%.1f", model.cacheLookupTime)
+        inputStorageTime = String(format: "%.2f", model.storageTime)
+        inputInterruptionTime = String(format: "%.2f", model.interruptionTime)
+        inputCacheLookupTime = String(format: "%.2f", model.cacheLookupTime)
         inputCacheCapacity = String(Int(model.cacheCapacity))
     }
 }
