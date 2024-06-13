@@ -210,7 +210,7 @@ struct HistoryView:View {
     var body: some View {
         NavigationView{
             List{
-                ForEach(viewModel.historyList,id:\.self){ history in
+                ForEach(viewModel.historyList.reversed(),id:\.self){ history in
                     NavigationLink(destination: {
                         HistoryCard(history: history)
                     }, label: {

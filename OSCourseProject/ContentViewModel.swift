@@ -13,6 +13,7 @@ class ContentViewModel:ObservableObject{
     
     
     @Published var status:Status = .preparing
+    @Published var isFinished:Bool = false
     // MARK: - 基础运行模块，包括基础算法执行类，保存的页面队列
     // 基础的页面队列
     @Published var pageSequence:[Int] = [] // 逻辑页面访问序列
@@ -59,6 +60,7 @@ class ContentViewModel:ObservableObject{
         
         point = 0
         status = .preparing
+        isFinished = false
         
     }
     // 单步步进，四个算法运算器分别进行一步步进
@@ -158,6 +160,7 @@ class ContentViewModel:ObservableObject{
                 // 当所有任务完成的时候，保存一次数据
                 let history = History(date: .now, pageFrameCount: settingModel.pageFrameCount, storageTime: settingModel.storageTime, interruptionTime: settingModel.interruptionTime, useCache: settingModel.useCache, cacheLookupTime: settingModel.cacheLookupTime, cacheCapacity: settingModel.cacheCapacity, fifoResult: self.FIFOexecutor!.pageFrames, fifoRecordList: FIFOexecutor!.recordList, fifoTimeDuration: self.FIFOexecutor!.timeSpent, fifoInterruptionCount: self.FIFOexecutor!.interruptionCount, lruResult: self.LRUexecutor!.pageFrames, lruRecordList: self.LRUexecutor!.recordList, lruTimeDuration: self.LRUexecutor!.timeSpent, lruInterruptionCount: self.LRUexecutor!.interruptionCount, lfuResult: self.LFUexecutor!.pageFrames, lfuRecordList: self.LFUexecutor!.recordList, lfuTimeDuration: self.LFUexecutor!.timeSpent, lfuInterruptionCount: self.LFUexecutor!.interruptionCount, optResult: self.OPTexecutor!.pageFrames, optRecordList: self.OPTexecutor!.recordList, optTimeDuration: self.OPTexecutor!.timeSpent, optInterruptionCount: self.OPTexecutor!.interruptionCount)
                 historyList.append(history)
+                isFinished = true
                 saveData()
                 print("All functions completed")
             }

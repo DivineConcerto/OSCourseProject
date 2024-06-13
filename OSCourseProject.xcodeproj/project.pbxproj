@@ -59,6 +59,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC734CC02C1AE691008586B7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DC71157A2C1004540092F63E /* MatrixView.swift */,
+				DC9D69232C0D709300D0B541 /* SettingView.swift */,
+				DC7115782C0FEA290092F63E /* RecordView.swift */,
+				DC88E2502C1931C40010A956 /* ResultView.swift */,
+				DC88E2562C1A8F590010A956 /* HistoryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DC9D68F52C0D499D00D0B541 = {
 			isa = PBXGroup;
 			children = (
@@ -80,13 +92,8 @@
 			children = (
 				DC9D69012C0D499D00D0B541 /* OSCourseProjectApp.swift */,
 				DC9D69032C0D499D00D0B541 /* ContentView.swift */,
-				DC71157A2C1004540092F63E /* MatrixView.swift */,
-				DC9D69232C0D709300D0B541 /* SettingView.swift */,
-				DC7115782C0FEA290092F63E /* RecordView.swift */,
-				DC88E2502C1931C40010A956 /* ResultView.swift */,
 				DC9D69212C0D5BCC00D0B541 /* ContentViewModel.swift */,
-				DC88E2562C1A8F590010A956 /* HistoryView.swift */,
-				DC7115762C0FE6E70092F63E /* Utility.swift */,
+				DC734CC02C1AE691008586B7 /* View */,
 				DC9D691E2C0D5A3100D0B541 /* Model */,
 				DC9D69052C0D499E00D0B541 /* Assets.xcassets */,
 				DC9D690A2C0D499F00D0B541 /* OSCourseProject.entitlements */,
@@ -106,6 +113,7 @@
 		DC9D691E2C0D5A3100D0B541 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DC7115762C0FE6E70092F63E /* Utility.swift */,
 				DC9D69102C0D49C800D0B541 /* SettingModel.swift */,
 				DC88E2542C1951360010A956 /* RecordModel.swift */,
 				DC9D69122C0D4D0400D0B541 /* FIFOExecutor.swift */,

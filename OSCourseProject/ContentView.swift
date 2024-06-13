@@ -86,6 +86,26 @@ struct ContentView: View {
                         .font(.custom(settingModel.fontName, size: 20))
 
                 })
+                if viewModel.isPaused{
+                    Text("当前已暂停")
+                        .font(.custom(settingModel.fontName, size: 20))
+                        .shadow(radius: 10)
+                        .foregroundColor(.gray)
+                        .padding(.leading,30)
+                }else if viewModel.isFinished{
+                    Text("任务已完成")
+                        .font(.custom(settingModel.fontName, size: 20))
+                        .shadow(radius: 10)
+                        .foregroundColor(.gray)
+                        .padding(.leading,30)
+                }else{
+                    Text("任务进行中")
+                        .font(.custom(settingModel.fontName, size: 20))
+                        .shadow(radius: 10)
+                        .foregroundColor(.gray)
+                        .padding(.leading,30)
+                }
+                
             }
             HStack{
                 Text("输入序列：")

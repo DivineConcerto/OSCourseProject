@@ -40,9 +40,6 @@ struct ShowView:View {
     
     var recordList:[Record] =
     [
-        Record(inputPage: 2, content: [2,3,4,1,6]),
-        Record(inputPage: 1, content: [2,3,4,1,5]),
-        Record(inputPage: 3, content: [2,4,3,1,2])
     ]
     
     
