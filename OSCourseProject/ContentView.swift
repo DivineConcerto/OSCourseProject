@@ -55,11 +55,20 @@ struct ContentView: View {
                         .font(.custom(settingModel.fontName, size: 20))
 
                 })
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text("暂停")
-                        .font(.custom(settingModel.fontName, size: 20))
-
-                })
+                if viewModel.isPaused{
+                    Button("运行"){
+                        viewModel.resume()
+                    }
+                    .font(.custom(settingModel.fontName, size: 20))
+                }else{
+                    Button(action: {
+                        viewModel.pause()
+                    }, label: {
+                        Text("暂停")
+                            .font(.custom(settingModel.fontName, size: 20))
+                        
+                    })
+                }
                 Button(action: {
                     viewModel.step()
                 }, label: {

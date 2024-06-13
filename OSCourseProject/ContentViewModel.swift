@@ -117,86 +117,119 @@ class ContentViewModel:ObservableObject{
     
     // MARK: - 多线程控制板块，当前使用方案
     let dispatchGroup = DispatchGroup()
-    @Published var fifoPoint = 0
-    @Published var lruPoint = 0
-    @Published var lfuPoint = 0
-    @Published var optPoint = 0
+        @Published var fifoPoint = 0
+        @Published var lruPoint = 0
+        @Published var lfuPoint = 0
+        @Published var optPoint = 0
 
-    let queue = DispatchQueue.global()
+        let queue = DispatchQueue.global()
 
-    func start() {
-        self.dispatchGroup.enter()
-        self.queue.async(group: self.dispatchGroup) {
-            self.runFIFO()
+        let semaphore = DispatchSemaphore(value: 1)
+        @Published var isPaused = false
+
+        func start() {
+            dispatchGroup.enter()
+            queue.async(group: dispatchGroup) {
+                self.runFIFO()
+            }
+
+            dispatchGroup.enter()
+            queue.async(group: dispatchGroup) {
+                self.runLRU()
+            }
+
+            dispatchGroup.enter()
+            queue.async(group: dispatchGroup) {
+                self.runLFU()
+            }
+
+            dispatchGroup.enter()
+            queue.async(group: dispatchGroup) {
+                self.runOPT()
+            }
+
+            dispatchGroup.notify(queue: DispatchQueue.main) {
+                print("All functions completed")
+            }
         }
 
-        self.dispatchGroup.enter()
-        self.queue.async(group: self.dispatchGroup) {
-            self.runLRU()
-        }
-
-        self.dispatchGroup.enter()
-        self.queue.async(group: self.dispatchGroup) {
-            self.runLFU()
-        }
-
-        self.dispatchGroup.enter()
-        self.queue.async(group: self.dispatchGroup) {
-            self.runOPT()
-        }
-
-        self.dispatchGroup.notify(queue: DispatchQueue.main) {
-            print("All functions completed")
-        }
-    }
-
-    func runFIFO() {
-        DispatchQueue.global().async {
-            while self.fifoPoint < self.pageSequence.count {
-                self.FIFOexecutor?.step(pageIndex: self.pageSequence[self.fifoPoint])
-                self.fifoPoint += 1
-                Thread.sleep(forTimeInterval: self.settingModel.intervals)
+        func runFIFO() {
+            while fifoPoint < pageSequence.count {
+                semaphore.wait()
+                defer { semaphore.signal() }
+                if isPaused {
+                    continue
+                }
+                DispatchQueue.main.async {
+                    self.FIFOexecutor?.step(pageIndex: self.pageSequence[self.fifoPoint])
+                    self.fifoPoint += 1
+                }
+                Thread.sleep(forTimeInterval: settingModel.intervals)
             }
             print("FIFO completed")
-            self.dispatchGroup.leave()
+            dispatchGroup.leave()
         }
-    }
 
-    func runLRU() {
-        DispatchQueue.global().async {
-            while self.lruPoint < self.pageSequence.count {
-                self.LRUexecutor?.step(pageIndex: self.pageSequence[self.lruPoint])
-                self.lruPoint += 1
-                Thread.sleep(forTimeInterval: self.settingModel.intervals)
+        func runLRU() {
+            while lruPoint < pageSequence.count {
+                semaphore.wait()
+                defer { semaphore.signal() }
+                if isPaused {
+                    continue
+                }
+                DispatchQueue.main.async {
+                    self.LRUexecutor?.step(pageIndex: self.pageSequence[self.lruPoint])
+                    self.lruPoint += 1
+                }
+                Thread.sleep(forTimeInterval: settingModel.intervals)
             }
             print("LRU completed")
-            self.dispatchGroup.leave()
+            dispatchGroup.leave()
         }
-    }
 
-    func runLFU() {
-        DispatchQueue.global().async {
-            while self.lfuPoint < self.pageSequence.count {
-                self.LFUexecutor?.step(pageIndex: self.pageSequence[self.lfuPoint])
-                self.lfuPoint += 1
-                Thread.sleep(forTimeInterval: self.settingModel.intervals)
+        func runLFU() {
+            while lfuPoint < pageSequence.count {
+                semaphore.wait()
+                defer { semaphore.signal() }
+                if isPaused {
+                    continue
+                }
+                DispatchQueue.main.async {
+                    self.LFUexecutor?.step(pageIndex: self.pageSequence[self.lfuPoint])
+                    self.lfuPoint += 1
+                }
+                Thread.sleep(forTimeInterval: settingModel.intervals)
             }
             print("LFU completed")
-            self.dispatchGroup.leave()
+            dispatchGroup.leave()
         }
-    }
 
-    func runOPT() {
-        DispatchQueue.global().async {
-            while self.optPoint < self.pageSequence.count {
-                self.OPTexecutor?.step(pageIndex: self.pageSequence[self.optPoint], currentPoint: self.optPoint)
-                self.optPoint += 1
-                Thread.sleep(forTimeInterval: self.settingModel.intervals)
+        func runOPT() {
+            while optPoint < pageSequence.count {
+                semaphore.wait()
+                defer { semaphore.signal() }
+                if isPaused {
+                    continue
+                }
+                DispatchQueue.main.async {
+                    self.OPTexecutor?.step(pageIndex: self.pageSequence[self.optPoint], currentPoint: self.optPoint)
+                    self.optPoint += 1
+                }
+                Thread.sleep(forTimeInterval: settingModel.intervals)
             }
             print("OPT completed")
-            self.dispatchGroup.leave()
+            dispatchGroup.leave()
         }
-    }
+
+        func pause() {
+            isPaused = true
+        }
+
+        func resume() {
+            isPaused = false
+            semaphore.signal()
+        }
+
 
     // 确保在使用索引时进行边界检查
     func getPageSequenceValue(at index: Int) -> Int? {
